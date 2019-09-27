@@ -4,6 +4,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * Rest Controller to manage the calls centrally.
+ */
 @RestController
 @RequestMapping("/application")
 public class UserController {
