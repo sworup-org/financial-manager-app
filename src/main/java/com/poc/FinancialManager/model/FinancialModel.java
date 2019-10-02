@@ -1,5 +1,8 @@
 package com.poc.FinancialManager.model;
 
+import lombok.Data;
+
+@Data
 public class FinancialModel {
     
     private int userId;

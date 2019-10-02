@@ -29,7 +29,7 @@ public class UserController {
    @GetMapping(value = "/save")
    private UserProfile saveUser()
    {
-      UserProfile userProfile=new UserProfile();
+      UserProfile userProfile=new UserPFrofile();
       userProfile.setUserId(1);
       userProfile.setName("Sworup Patra");
       userProfile.setAddress("Malleshpalya Bangalore");
