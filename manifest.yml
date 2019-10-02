@@ -1,0 +1,6 @@
+---
+applications:
+  - name: Financal-Manager
+    path: target/FinancialManager-0.0.1-SNAPSHOT.jar
+    memory: 2GB
+    instance: 1
