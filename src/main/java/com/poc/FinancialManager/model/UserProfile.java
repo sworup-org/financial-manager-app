@@ -12,7 +12,6 @@ import javax.persistence.*;
 @Data
 public class UserProfile {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "userId")
     private int userId;
     @Column(name = "name")
@@ -29,5 +28,4 @@ public class UserProfile {
     private String designation;
     @Column(name = "experience")
     private double experience;
-
 }

@@ -4,9 +4,10 @@ import com.poc.FinancialManager.model.UserProfile;
 import com.poc.FinancialManager.userDao.UserDaoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.persistence.Entity;
+import java.util.List;
 
 /**
  * Rest Controller to manage the calls centrally.
@@ -18,6 +19,7 @@ public class UserController {
 
    @Autowired
    UserDaoRepository userDaoRepository;
+   
 
 
    @GetMapping(value = "/ping")
@@ -26,20 +28,25 @@ public class UserController {
       return ("SERVER IS UP AND RUNNING!!");
    }
 
-   @GetMapping(value = "/save")
-   private UserProfile saveUser()
+   @GetMapping(value = "/getUserProfile")
+   private List<UserProfile> getUserProfiles()
    {
-      UserProfile userProfile=new UserProfile();
-      userProfile.setUserId(1);
-      userProfile.setName("Sworup Patra");
-      userProfile.setAddress("Malleshpalya Bangalore");
-      userProfile.setContact("9493477182");
-      userProfile.setAge(26);
-      userProfile.setCompanyName("SAP Labs");
-      userProfile.setDesignation("Software Developer 2");
-      userProfile.setExperience(2.6);
-      return  (userDaoRepository.save(userProfile));
+      List<UserProfile> userProfiles= (List<UserProfile>) userDaoRepository.findAll();
+      return userProfiles;
    }
+
+   @PostMapping(value = "/saveUserProfile")
+   private String saveUserProgfile(@RequestBody UserProfile userProfile)
+   {
+      userDaoRepository.save(userProfile);
+      return "SUCCESSFULLY SAVED USER :"+ userProfile.getUserId() ;
+   }
+
+  @GetMapping(value = "/insertTestData")
+   public String insertTestData()
+  {
+return null;
+  }
 
 
 
