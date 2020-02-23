@@ -1,4 +1,3 @@
-/*
 package com.poc.FinancialManager.model;
 
 
@@ -19,4 +18,3 @@ public class IncomeModel {
     private int bonus;
     private int others;
 }
-*/

@@ -19,5 +19,6 @@ public class ExpenditureModel {
     private int household;
     private int vehicle;
     private int communication;
+    private int loans;
 
 }
