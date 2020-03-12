@@ -1,4 +1,4 @@
-package com.poc.FinancialManager.userDao;
+package com.poc.FinancialManager.dao;
 
 import com.poc.FinancialManager.model.UserProfile;
 import org.springframework.data.repository.CrudRepository;

@@ -1,12 +1,11 @@
 package com.poc.FinancialManager.controller;
 
 import com.poc.FinancialManager.model.UserProfile;
-import com.poc.FinancialManager.userDao.UserDaoRepository;
+import com.poc.FinancialManager.dao.UserDaoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.Entity;
 import java.util.List;
 
 /**
@@ -14,7 +13,7 @@ import java.util.List;
  */
 @Component
 @RestController
-@RequestMapping("/application")
+@RequestMapping("fma/userProfile")
 public class UserController {
 
    @Autowired
@@ -41,12 +40,6 @@ public class UserController {
       userDaoRepository.save(userProfile);
       return "SUCCESSFULLY SAVED USER :"+ userProfile.getUserId() ;
    }
-
-  @GetMapping(value = "/insertTestData")
-   public String insertTestData()
-  {
-return null;
-  }
 
 
 
