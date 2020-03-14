@@ -19,7 +19,7 @@ public class IncomeController
     public String saveExpenditureModel(@RequestBody IncomeModel incomeModel)
     {
         incomeService.saveIncomeModel(incomeModel);
-        return "SUCCESSFULLY EXPENDITURE MODEL SAVED FOR USERID: {}"+incomeModel.getUserId();
+        return "SUCCESSFULLY INCOME MODEL SAVED FOR USERID: {}"+incomeModel.getUserId();
 
     }
 

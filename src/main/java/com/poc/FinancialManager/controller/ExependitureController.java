@@ -16,8 +16,9 @@ public class ExependitureController {
     @PostMapping(value = "/saveExpenditure")
     public String saveExpenditureModel(@RequestBody  ExpenditureModel expenditureModel)
     {
-        expenditureService.saveExpenditureModel(expenditureModel);
-        return "SUCCESSFULLY EXPENDITURE MODEL SAVED FOR USERID: {}"+expenditureModel.getUserId();
+        if(expenditureService.saveExpenditureModel(expenditureModel).equalsIgnoreCase("SUCCESS"))
+        return "SUCCESSFULLY EXPENDITURE MODEL AND SAVINGS MODEL CREATED FOR USERID: {}"+expenditureModel.getUserId();
+        return "EXPENDITURE MODEL CREATION SUCCESSFUL BUT SAVINGS MODEL FAILED FOR USERID:" +expenditureModel.getUserId();
 
     }
 

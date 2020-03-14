@@ -11,11 +11,19 @@ public class ExpenditureServiceImpl  implements  ExpenditureService{
 
     @Autowired
     ExpenditureModelDao expenditureModelDao;
+    @Autowired
+    SavingsCalculator savingsCalculator;
 
     @Override
-    public void saveExpenditureModel(ExpenditureModel expenditureModel) {
+    public String saveExpenditureModel(ExpenditureModel expenditureModel) {
 
     expenditureModelDao.save(expenditureModel);
+    String res=savingsCalculator.saveSavingsModelOfUserId(expenditureModel.getUserId());
+    if(res.equalsIgnoreCase("SUCCESS"))
+        return "SUCCESS";
+    else
+        return "FAILED";
+
 
     }
 
