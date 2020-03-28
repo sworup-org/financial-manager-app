@@ -6,7 +6,6 @@ import com.poc.FinancialManager.dao.SavingsModelDao;
 import com.poc.FinancialManager.model.ExpenditureModel;
 import com.poc.FinancialManager.model.IncomeModel;
 import com.poc.FinancialManager.model.SavingsModel;
-import com.sun.org.apache.regexp.internal.RE;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

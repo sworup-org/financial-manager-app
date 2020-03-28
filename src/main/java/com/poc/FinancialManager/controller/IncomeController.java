@@ -1,8 +1,6 @@
 package com.poc.FinancialManager.controller;
 
-import com.poc.FinancialManager.model.ExpenditureModel;
 import com.poc.FinancialManager.model.IncomeModel;
-import com.poc.FinancialManager.services.ExpenditureService;
 import com.poc.FinancialManager.services.IncomeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

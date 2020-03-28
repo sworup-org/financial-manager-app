@@ -1,6 +1,5 @@
 package com.poc.FinancialManager.services;
 
-import com.poc.FinancialManager.model.ExpenditureModel;
 import com.poc.FinancialManager.model.IncomeModel;
 import org.springframework.stereotype.Service;
 
