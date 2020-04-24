@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface IncomeModelDao extends CrudRepository<IncomeModel,String> {
 
-    public IncomeModel findByUserId(int userId);
+    public IncomeModel findByUserId(String userId);
 
 }

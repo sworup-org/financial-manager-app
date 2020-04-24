@@ -5,6 +5,7 @@ import lombok.Data;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.sql.Date;
 
 
 @Entity
@@ -12,7 +13,8 @@ import javax.persistence.Id;
 public class ExpenditureModel {
 
     @Id
-    private int userId;
+    private String handle;
+    private String userId;
     private int rent;
     private int food;
     private int shopping;
@@ -20,5 +22,20 @@ public class ExpenditureModel {
     private int vehicle;
     private int communication;
     private int loans;
+    private Date expenseDate;
+
+    public ExpenditureModel(){}
+
+    public ExpenditureModel(String userId,Date expenseDate)
+    {
+        this.handle=getHandleId(userId,expenseDate);
+    }
+
+    private String getHandleId(String userId,Date expenseDate)
+    {
+
+        return userId+":"+expenseDate;
+    }
+
 
 }

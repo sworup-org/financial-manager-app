@@ -3,6 +3,7 @@ package com.poc.FinancialManager.services;
 
 import com.poc.FinancialManager.dao.ExpenditureModelDao;
 import com.poc.FinancialManager.model.ExpenditureModel;
+import com.poc.FinancialManager.model.ExpenditureModelBO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,7 +29,22 @@ public class ExpenditureServiceImpl  implements  ExpenditureService{
     }
 
     @Override
-    public ExpenditureModel getExpenditureModelId(int userId) {
+    public ExpenditureModel getExpenditureModelId(String userId) {
          return  expenditureModelDao.findByUserId(userId);
+    }
+
+    @Override
+    public ExpenditureModel convertExpenditureModelBOToDO(ExpenditureModelBO expenditureModelBo) {
+        ExpenditureModel expenditureModel=new ExpenditureModel(expenditureModelBo.getUserId(),expenditureModelBo.getExpenseDate());
+        expenditureModel.setUserId(expenditureModelBo.getUserId());
+        expenditureModel.setCommunication(expenditureModelBo.getCommunication());
+        expenditureModel.setExpenseDate(expenditureModelBo.getExpenseDate());
+        expenditureModel.setFood(expenditureModelBo.getFood());
+        expenditureModel.setVehicle(expenditureModelBo.getVehicle());
+        expenditureModel.setHousehold(expenditureModelBo.getHousehold());
+        expenditureModel.setLoans(expenditureModelBo.getLoans());
+        expenditureModel.setRent(expenditureModelBo.getRent());
+        expenditureModel.setShopping(expenditureModelBo.getShopping());
+        return expenditureModel;
     }
 }

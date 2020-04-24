@@ -2,6 +2,7 @@ package com.poc.FinancialManager.controller;
 
 
 import com.poc.FinancialManager.model.ExpenditureModel;
+import com.poc.FinancialManager.model.ExpenditureModelBO;
 import com.poc.FinancialManager.services.ExpenditureService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -14,8 +15,11 @@ public class ExependitureController {
     ExpenditureService expenditureService;
 
     @PostMapping(value = "/saveExpenditure")
-    public String saveExpenditureModel(@RequestBody  ExpenditureModel expenditureModel)
+    public String saveExpenditureModel(@RequestBody ExpenditureModelBO expenditureModelBo)
     {
+
+        ExpenditureModel expenditureModel=expenditureService.convertExpenditureModelBOToDO(expenditureModelBo);
+
         if(expenditureService.saveExpenditureModel(expenditureModel).equalsIgnoreCase("SUCCESS"))
         return "SUCCESSFULLY EXPENDITURE MODEL AND SAVINGS MODEL CREATED FOR USERID: {}"+expenditureModel.getUserId();
         return "EXPENDITURE MODEL CREATION SUCCESSFUL BUT SAVINGS MODEL FAILED FOR USERID:" +expenditureModel.getUserId();
@@ -23,7 +27,7 @@ public class ExependitureController {
     }
 
     @GetMapping(value = "/getExpenditureById/{userId}")
-    public ExpenditureModel getExpenditureModel(@PathVariable("userId") int userId)
+    public ExpenditureModel getExpenditureModel(@PathVariable("userId") String userId)
     {
        return expenditureService.getExpenditureModelId(userId);
 

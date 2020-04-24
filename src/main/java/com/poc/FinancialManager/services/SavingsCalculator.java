@@ -19,7 +19,7 @@ public class SavingsCalculator {
     @Autowired
     SavingsModelDao savingsModelDao;
 
-    public String saveSavingsModelOfUserId(int userId)
+    public String saveSavingsModelOfUserId(String userId)
     {
         IncomeModel incomeModel= incomeModelDao.findByUserId(userId);
         ExpenditureModel expenditureModel= expenditureModelDao.findByUserId(userId);
