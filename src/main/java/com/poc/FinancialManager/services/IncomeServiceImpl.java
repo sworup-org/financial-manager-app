@@ -8,26 +8,29 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class IncomeServiceImpl implements IncomeService{
+public class IncomeServiceImpl implements IncomeService {
 
-@Autowired
+    @Autowired
     IncomeModelDao incomeModelDao;
+    @Autowired
+    SavingsCalculator savingsCalculator;
 
     @Override
     public void saveIncomeModel(IncomeModel incomeModel) {
 
-    incomeModelDao.save(incomeModel);
+        incomeModelDao.save(incomeModel);
+        savingsCalculator.saveSavingsModelOnIncome(incomeModel);
     }
 
     @Override
     public IncomeModel getIncomeByUserId(String userId) {
 
-        return  incomeModelDao.findByUserId(userId);
+        return incomeModelDao.findByUserId(userId);
     }
 
     @Override
     public IncomeModel convertIncomeBOtoDO(IncomeModelBO incomeModelBO) {
-        IncomeModel incomeModel=new IncomeModel(incomeModelBO.getUserId(),incomeModelBO.getIncomeDate());
+        IncomeModel incomeModel = new IncomeModel(incomeModelBO.getUserId(), incomeModelBO.getIncomeDate());
         incomeModel.setUserId(incomeModelBO.getUserId());
         incomeModel.setBonus(incomeModelBO.getBonus());
         incomeModel.setDeduction(incomeModelBO.getDeduction());

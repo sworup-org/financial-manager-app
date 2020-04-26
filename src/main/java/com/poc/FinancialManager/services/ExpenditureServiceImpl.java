@@ -19,7 +19,7 @@ public class ExpenditureServiceImpl  implements  ExpenditureService{
     public String saveExpenditureModel(ExpenditureModel expenditureModel) {
 
     expenditureModelDao.save(expenditureModel);
-    String res=savingsCalculator.saveSavingsModelOfUserId(expenditureModel.getUserId());
+    String res=savingsCalculator.saveSavingsModelOnExpenditure(expenditureModel);
     if(res.equalsIgnoreCase("SUCCESS"))
         return "SUCCESS";
     else

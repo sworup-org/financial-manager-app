@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 public interface ExpenditureModelDao extends CrudRepository<ExpenditureModel, String> {
 
   public ExpenditureModel findByUserId(String userId);
+  public ExpenditureModel findByHandle(String handle);
 
 
 }

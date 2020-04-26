@@ -1,7 +1,5 @@
 package com.poc.FinancialManager.model;
 
-import javax.persistence.Column;
-
 public class UserProfileBO {
 
     private int userId;
