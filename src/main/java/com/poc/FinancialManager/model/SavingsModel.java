@@ -22,8 +22,6 @@ public class SavingsModel {
     private String userId;
     @Column(name = "savings")
     private int savings;
-    @Column(name = "bonus")
-    private int bonus;
     @Column(name = "savings_date")
     private Date savingsDate;
 

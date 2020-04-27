@@ -32,5 +32,7 @@
         <!-- Mapping files will go here.... -->
 
         <mapping class="com.poc.FinancialManager.model.SavingsModel" />
+        <mapping class="com.poc.FinancialManager.model.IncomeModel" />
+        <mapping class="com.poc.FinancialManager.model.ExpenditureModel" />
     </session-factory>
 </hibernate-configuration>

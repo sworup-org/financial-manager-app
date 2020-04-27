@@ -7,6 +7,8 @@ import com.poc.FinancialManager.model.ExpenditureModelBO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ExpenditureServiceImpl  implements  ExpenditureService{
 
@@ -45,6 +47,14 @@ public class ExpenditureServiceImpl  implements  ExpenditureService{
         expenditureModel.setLoans(expenditureModelBo.getLoans());
         expenditureModel.setRent(expenditureModelBo.getRent());
         expenditureModel.setShopping(expenditureModelBo.getShopping());
+
+        int netExpenditure=expenditureModelBo.getFood()+expenditureModelBo.getVehicle()+expenditureModelBo.getCommunication()+expenditureModelBo.getHousehold()+expenditureModelBo.getRent()+expenditureModelBo.getLoans()+expenditureModelBo.getShopping();
+        expenditureModel.setTotalExpense(netExpenditure);
         return expenditureModel;
     }
+
+   /* @Override
+    public List<ExpenditureModel> getAllExpenditureModelforUserId(String UserId) {
+        return  expenditureModelDao.getExpenditureModelforUserId(UserId);
+    }*/
 }

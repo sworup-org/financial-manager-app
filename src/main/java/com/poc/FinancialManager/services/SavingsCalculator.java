@@ -29,21 +29,47 @@ public class SavingsCalculator {
 
     @Transactional
     public String saveSavingsModelOnExpenditure(ExpenditureModel expenditureModel) {
-        IncomeModel incomeModel = incomeModelDao.findByHandle(expenditureModel.getHandle());
-
-        if (incomeModel == null || expenditureModel == null)
-            return "FAILED";
-
-        int netIncome = incomeModel.getSalary() + incomeModel.getBonus() + incomeModel.getOthers() - incomeModel.getDeduction();
+        SavingsModel savingsModel = savingsModelDao.findByHandle(expenditureModel.getHandle());
+        SessionFactory sessionFactory=new Configuration().configure().buildSessionFactory();
+        Session session=sessionFactory.getCurrentSession();
+        session.beginTransaction();
         int netExpenditure = expenditureModel.getCommunication() + expenditureModel.getFood() + expenditureModel.getHousehold() + expenditureModel.getLoans() + expenditureModel.getRent() + expenditureModel.getShopping() + expenditureModel.getVehicle();
-        int savings = netIncome - netExpenditure;
 
-        SavingsModel savingsModel = new SavingsModel();
-        savingsModel.setSavings(savings);
-        savingsModel.setUserId(expenditureModel.getUserId());
-        savingsModel.setHandle(expenditureModel.getHandle());
-        savingsModel.setSavingsDate(expenditureModel.getExpenseDate());
-        savingsModelDao.save(savingsModel);
+        //Savings not available for the expenditure day.
+
+        if (savingsModel == null) {
+            Query query = session.createQuery("from SavingsModel sm order by sm.savingsDate DESC", SavingsModel.class);
+            query.setMaxResults(1);
+            SavingsModel last = (SavingsModel) query.uniqueResult();
+
+            //check if the last is also Null then error to be thrown as Income not updated
+            if(last!=null)
+            {
+                int netSavings=last.getSavings()-netExpenditure;
+                savingsModel = new SavingsModel(expenditureModel.getUserId(),expenditureModel.getExpenseDate());
+                savingsModel.setSavings(netSavings);
+                savingsModel.setUserId(expenditureModel.getUserId());
+                savingsModel.setSavingsDate(expenditureModel.getExpenseDate());
+                savingsModelDao.save(savingsModel);
+            }
+            else {
+                return "FAILED";
+            }
+
+        }
+        // Savings model available for the day
+
+        else {
+
+            int savings = savingsModel.getSavings() - netExpenditure;
+
+            savingsModel = new SavingsModel(expenditureModel.getUserId(), expenditureModel.getExpenseDate());
+            savingsModel.setSavings(savings);
+            savingsModel.setUserId(expenditureModel.getUserId());
+            savingsModel.setHandle(expenditureModel.getHandle());
+            savingsModel.setSavingsDate(expenditureModel.getExpenseDate());
+            savingsModelDao.save(savingsModel);
+        }
         return "SUCCESS";
 
     }
@@ -53,34 +79,42 @@ public class SavingsCalculator {
         SavingsModel savingsModel = savingsModelDao.findByHandle(incomeModel.getHandle());
         SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
         Session session = sessionFactory.getCurrentSession();
+        session.beginTransaction();
 
         int netIncome = incomeModel.getSalary() + incomeModel.getBonus() + incomeModel.getOthers() - incomeModel.getDeduction();
         if (savingsModel == null) {
-            Transaction tx=session.beginTransaction();
-            Query query = session.createQuery("from SavingsModel sm order by sm.savingsDate DESC", SavingsModel.class);
+            Query query = session.createQuery("from SavingsModel sm where userId = :userId order by sm.savingsDate DESC", SavingsModel.class);
+           query.setParameter("userId",incomeModel.getUserId());
             query.setMaxResults(1);
             SavingsModel last = (SavingsModel) query.uniqueResult();
 
+            //If 1st Income of the person as entry
+
             if (last == null) {
-                savingsModel = new SavingsModel();
+                savingsModel = new SavingsModel(incomeModel.getUserId(),incomeModel.getIncomeDate());
                 savingsModel.setSavings(netIncome);
                 savingsModel.setUserId(incomeModel.getUserId());
-                savingsModel.setHandle(incomeModel.getHandle());
                 savingsModel.setSavingsDate(incomeModel.getIncomeDate());
                 savingsModelDao.save(savingsModel);
-                return "No Income or Expenditure declared yet";
+                return "SUCCESS";
             }
 
-            int netSavings = ((savingsModel.getSavings() + netIncome));
+            //if the person has already some savings.
 
-            query = session.createQuery("Update  SavingsModel sm  set sm.savings= :netSavings where sm.handle= :handle ",SavingsModel.class);
-            query.setParameter(0, netSavings);
-            query.setParameter(1, savingsModel.getHandle());
-            query.executeUpdate();
-
+            else if(last!=null)
+            {
+                int netSavings = ((last.getSavings() + netIncome));
+                savingsModel=new SavingsModel(incomeModel.getUserId(),incomeModel.getIncomeDate());
+                savingsModel.setSavingsDate(incomeModel.getIncomeDate());
+                savingsModel.setSavings(netSavings);
+                savingsModel.setUserId(incomeModel.getUserId());
+                savingsModelDao.save(savingsModel);
+                return "SUCCESS";
+            }
+            return "FAILED";
         }
 
-        return "SUCCESS";
+        return "FAILED";
 
     }
 

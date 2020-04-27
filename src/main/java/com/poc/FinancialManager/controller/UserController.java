@@ -1,7 +1,9 @@
 package com.poc.FinancialManager.controller;
 
+import com.poc.FinancialManager.model.FInancialModel;
 import com.poc.FinancialManager.model.UserProfile;
 import com.poc.FinancialManager.dao.UserDaoRepository;
+import com.poc.FinancialManager.services.FInancialModelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +20,8 @@ public class UserController {
 
    @Autowired
    UserDaoRepository userDaoRepository;
+   @Autowired
+   FInancialModelService fInancialModelService;
    
 
 
@@ -40,6 +44,13 @@ public class UserController {
       userDaoRepository.save(userProfile);
       return "SUCCESSFULLY SAVED USER :"+ userProfile.getUserId() ;
    }
+
+   @GetMapping (value = "/getFinancialModelByUserId/{userId}")
+   private FInancialModel getFinancialModelbyUserId(@PathVariable("userId") String userId)
+   {
+      return fInancialModelService.getFinancialModelOfUser(userId);
+   }
+
 
 
 
