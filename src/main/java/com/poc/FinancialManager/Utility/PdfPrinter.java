@@ -7,7 +7,9 @@ import com.itextpdf.text.pdf.PdfWriter;
 import com.poc.FinancialManager.model.ExpenditureModel;
 import com.poc.FinancialManager.model.FInancialModel;
 import com.poc.FinancialManager.model.IncomeModel;
+import com.sun.scenario.effect.ImageData;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -66,9 +68,31 @@ public class PdfPrinter {
         chunk=new Chunk("NET SAVINGS: "+fInancialModel.getSavingsModel().getSavings(),fontContentBold);
         document.add(chunk);
         document.add(new Paragraph("\n"));
+        chunk=new Chunk("FINANCIAL MODEL CHART FOR USERID: "+fInancialModel.getUserId(),fontContentBold);
+        document.add(chunk);
+        document.add(new Paragraph("\n"));
 
 
-        document.close();
+        try {
+            // Creating image by file name
+            String filename = "/Users/sworuppatra/IdeaProjects/financial-manager-app/src/main/java/com/poc/FinancialManager/pdfFiles/FinancialModelChart_"+fInancialModel.getUserId()+".png";
+
+            File file=new File(filename);
+
+            Image image = Image.getInstance(filename);
+
+            int indentation=0;
+
+            float scaler = ((document.getPageSize().getWidth() - document.leftMargin()
+                    - document.rightMargin() - indentation) / image.getWidth()) * 60;
+
+            image.scalePercent(scaler);
+            document.add(image);
+        } catch (DocumentException | IOException e) {
+            e.printStackTrace();
+        } finally {
+            document.close();
+        }
     }
 
     private void addTableHeaderExpenditureTable(PdfPTable table) {

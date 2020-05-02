@@ -1,6 +1,7 @@
 package com.poc.FinancialManager.services;
 
 import com.itextpdf.text.DocumentException;
+import com.poc.FinancialManager.Utility.ChartGenerator;
 import com.poc.FinancialManager.Utility.PdfPrinter;
 import com.poc.FinancialManager.model.ExpenditureModel;
 import com.poc.FinancialManager.model.FInancialModel;
@@ -41,7 +42,7 @@ public class FinancialModelServiceImpl implements FInancialModelService {
         Session session = sessionFactory.getCurrentSession();
         session.beginTransaction();
 
-        List<IncomeModel> incomeModels=new ArrayList<>();
+        List<IncomeModel> incomeModels;
         List<ExpenditureModel> expenditureModels=new ArrayList<>();
 
         int totalIncome=0,totalExpenditure=0;
@@ -69,10 +70,13 @@ public class FinancialModelServiceImpl implements FInancialModelService {
         fInancialModel.setSavingsModel(savingslast);
         fInancialModel.setTotalExpense(totalExpenditure);
         fInancialModel.setTotalIncome(totalIncome);
-
+        ChartGenerator chartGenerator=new ChartGenerator();
         try {
-            generateFinancialModelPDF(fInancialModel);
-        }
+            if(!(fInancialModel.getIncomeModel().isEmpty()||fInancialModel.getExpenditureModel().isEmpty())) {
+                chartGenerator.chartGeneratorForModel(fInancialModel);
+                generateFinancialModelPDF(fInancialModel);
+            }
+            }
         catch (Exception e)
         {
             System.out.print("PDF GENERATOR FOR THE MODEL FAILED");

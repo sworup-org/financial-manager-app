@@ -20,10 +20,6 @@ import javax.transaction.Transactional;
 public class SavingsCalculator {
 
     @Autowired
-    IncomeModelDao incomeModelDao;
-    @Autowired
-    ExpenditureModelDao expenditureModelDao;
-    @Autowired
     SavingsModelDao savingsModelDao;
 
 
