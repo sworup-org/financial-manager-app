@@ -2,12 +2,15 @@ package com.poc.FinancialManager.services;
 
 
 import com.poc.FinancialManager.dao.ExpenditureModelDao;
+import com.poc.FinancialManager.dao.UserDaoRepository;
 import com.poc.FinancialManager.model.ExpenditureModel;
 import com.poc.FinancialManager.model.ExpenditureModelBO;
+import com.poc.FinancialManager.model.UserProfile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ExpenditureServiceImpl  implements  ExpenditureService{
@@ -16,22 +19,26 @@ public class ExpenditureServiceImpl  implements  ExpenditureService{
     ExpenditureModelDao expenditureModelDao;
     @Autowired
     SavingsCalculator savingsCalculator;
+    @Autowired
+    UserDaoRepository userDaoRepository;
 
     @Override
     public String saveExpenditureModel(ExpenditureModel expenditureModel) {
 
-    expenditureModelDao.save(expenditureModel);
-    String res=savingsCalculator.saveSavingsModelOnExpenditure(expenditureModel);
-    if(res.equalsIgnoreCase("SUCCESS"))
-        return "SUCCESS";
-    else
-        return "FAILED";
-
-
+        Optional<UserProfile> userProfile = userDaoRepository.findById(expenditureModel.getUserId());
+        if (userProfile.isPresent()) {
+            expenditureModelDao.save(expenditureModel);
+            String res = savingsCalculator.saveSavingsModelOnExpenditure(expenditureModel);
+            if (res.equalsIgnoreCase("SUCCESS"))
+                return "SUCCESS";
+            else
+                return "FAILED";
+        }
+        return "NO USERPROFILE";
     }
 
     @Override
-    public ExpenditureModel getExpenditureModelId(String userId) {
+    public List<ExpenditureModel> getExpenditureModelId(String userId) {
          return  expenditureModelDao.findByUserId(userId);
     }
 

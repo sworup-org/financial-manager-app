@@ -39,7 +39,7 @@ public class UserController {
    }
 
    @PostMapping(value = "/saveUserProfile")
-   private String saveUserProgfile(@RequestBody UserProfile userProfile)
+   private String saveUserProfile(@RequestBody UserProfile userProfile)
    {
       userDaoRepository.save(userProfile);
       return "SUCCESSFULLY SAVED USER :"+ userProfile.getUserId() ;
@@ -48,7 +48,9 @@ public class UserController {
    @GetMapping (value = "/getFinancialModelByUserId/{userId}")
    private FInancialModel getFinancialModelbyUserId(@PathVariable("userId") String userId)
    {
+      if(fInancialModelService.getFinancialModelOfUser(userId)!=null)
       return fInancialModelService.getFinancialModelOfUser(userId);
+      return null;
    }
 
 

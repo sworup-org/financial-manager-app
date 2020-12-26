@@ -1,14 +1,11 @@
 package com.poc.FinancialManager.services;
 
-import com.poc.FinancialManager.dao.ExpenditureModelDao;
-import com.poc.FinancialManager.dao.IncomeModelDao;
 import com.poc.FinancialManager.dao.SavingsModelDao;
 import com.poc.FinancialManager.model.ExpenditureModel;
 import com.poc.FinancialManager.model.IncomeModel;
 import com.poc.FinancialManager.model.SavingsModel;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;

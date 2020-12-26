@@ -10,8 +10,8 @@ import java.util.List;
 @Repository
 public interface IncomeModelDao extends CrudRepository<IncomeModel,String> {
 
-    public IncomeModel findByUserId(String userId);
-    public IncomeModel findByHandle(String handle);
+     List<IncomeModel> findByUserId(String userId);
+     IncomeModel findByHandle(String handle);
 
 /*
     @Query("select *  from Income_Model im where im.handle like '%:userId%' order by im.savings_Date DESC")

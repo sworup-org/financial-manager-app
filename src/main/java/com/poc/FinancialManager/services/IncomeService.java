@@ -10,8 +10,8 @@ import java.util.List;
 @Service
 public interface IncomeService {
 
-    void saveIncomeModel(IncomeModel expenditureModel);
-    IncomeModel getIncomeByUserId(String userId);
+    String saveIncomeModel(IncomeModel expenditureModel);
+    List<IncomeModel> getIncomeByUserId(String userId);
 
     IncomeModel convertIncomeBOtoDO(IncomeModelBO incomeModelBO);
 

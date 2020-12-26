@@ -6,6 +6,8 @@ import com.poc.FinancialManager.services.IncomeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("fma/income")
 public class IncomeController
@@ -18,13 +20,15 @@ public class IncomeController
     public String saveExpenditureModel(@RequestBody IncomeModelBO incomeModelBO)
     {
         IncomeModel incomeModel= incomeService.convertIncomeBOtoDO(incomeModelBO);
-        incomeService.saveIncomeModel(incomeModel);
-        return "SUCCESSFULLY INCOME MODEL SAVED FOR USERID: {}"+incomeModel.getUserId();
+        String status=incomeService.saveIncomeModel(incomeModel);
+       if(!status.equalsIgnoreCase("NO USERPROFILE"))
+        return "SUCCESSFULLY INCOME MODEL SAVED FOR USERID: "+incomeModel.getUserId();
+       return "USER_PROFILE DOES NOT EXIST FOR USER ID: "+incomeModel.getUserId();
 
     }
 
-    @GetMapping(value = "/getIncomeById/{userId}")
-    public IncomeModel getExpenditureModel(@PathVariable("userId") String userId)
+        @GetMapping(value = "/getIncomeById/{userId}")
+    public List<IncomeModel> getExpenditureModel(@PathVariable("userId") String userId)
     {
         return incomeService.getIncomeByUserId(userId);
 

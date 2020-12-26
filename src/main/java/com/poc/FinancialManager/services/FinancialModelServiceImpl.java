@@ -3,10 +3,8 @@ package com.poc.FinancialManager.services;
 import com.itextpdf.text.DocumentException;
 import com.poc.FinancialManager.Utility.ChartGenerator;
 import com.poc.FinancialManager.Utility.PdfPrinter;
-import com.poc.FinancialManager.model.ExpenditureModel;
-import com.poc.FinancialManager.model.FInancialModel;
-import com.poc.FinancialManager.model.IncomeModel;
-import com.poc.FinancialManager.model.SavingsModel;
+import com.poc.FinancialManager.dao.UserDaoRepository;
+import com.poc.FinancialManager.model.*;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -19,6 +17,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -28,8 +27,8 @@ public class FinancialModelServiceImpl implements FInancialModelService {
     SavingsService savingsService;
     @Autowired
     IncomeService incomeService;
-    /*@Autowired
-    ExpenditureService expenditureService;*/
+    @Autowired
+    UserDaoRepository userDaoRepository;
 
 
 
@@ -46,6 +45,11 @@ public class FinancialModelServiceImpl implements FInancialModelService {
         List<ExpenditureModel> expenditureModels=new ArrayList<>();
 
         int totalIncome=0,totalExpenditure=0;
+
+
+      Optional<UserProfile> userProfile=userDaoRepository.findById(userId);
+
+       if(!userProfile.isPresent()) return null;
 
         Query query = session.createQuery("from SavingsModel sm where userId = :userId order by sm.savingsDate DESC", SavingsModel.class);
         query.setParameter("userId",userId);

@@ -10,7 +10,7 @@ import java.util.List;
 public interface ExpenditureService {
 
     String saveExpenditureModel(ExpenditureModel expenditureModel);
-    ExpenditureModel getExpenditureModelId(String userId);
+    List<ExpenditureModel> getExpenditureModelId(String userId);
 
     ExpenditureModel convertExpenditureModelBOToDO(ExpenditureModelBO expenditureModelBo);
 

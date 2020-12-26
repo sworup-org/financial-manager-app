@@ -7,13 +7,13 @@ import javax.persistence.*;
 /**
  * User profile details
  */
-@Table(name = "USER_PROFILE")
 @Entity
 @Data
+@Table(name = "User_Profile")
 public class UserProfile {
     @Id
-    @Column(name = "userId")
-    private int userId;
+    @Column(name = "user_Id")
+    private String userId;
     @Column(name = "name")
     private String name;
     @Column(name = "age")
@@ -22,7 +22,9 @@ public class UserProfile {
     private String contact;
     @Column(name = "address")
     private String address;
-    @Column(name = "companyName")
+    @Column(name = "email")
+    private String email;
+    @Column(name = "company_name")
     private String companyName;
     @Column(name = "designation")
     private String designation;

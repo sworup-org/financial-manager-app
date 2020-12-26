@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
  * Interface for JPA operations on UserProfile model.
  */
 @Repository
-public interface UserDaoRepository  extends CrudRepository<UserProfile, Integer> {
+public interface UserDaoRepository  extends CrudRepository<UserProfile, String> {
 }

@@ -7,6 +7,8 @@ import com.poc.FinancialManager.services.ExpenditureService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("fma/expenditure")
 public class ExependitureController {
@@ -21,13 +23,16 @@ public class ExependitureController {
         ExpenditureModel expenditureModel=expenditureService.convertExpenditureModelBOToDO(expenditureModelBo);
 
         if(expenditureService.saveExpenditureModel(expenditureModel).equalsIgnoreCase("SUCCESS"))
-        return "SUCCESSFULLY EXPENDITURE MODEL AND SAVINGS MODEL CREATED FOR USERID: {}"+expenditureModel.getUserId();
+        return "SUCCESSFULLY EXPENDITURE MODEL AND SAVINGS MODEL CREATED FOR USERID: "+expenditureModel.getUserId();
+        else if (expenditureService.saveExpenditureModel(expenditureModel).equalsIgnoreCase("NO USERPROFILE"))
+            return "NO USER PROFILE PRESENT FOR :"+expenditureModel.getUserId();
         return "EXPENDITURE MODEL CREATION SUCCESSFUL BUT SAVINGS MODEL FAILED FOR USERID:" +expenditureModel.getUserId();
+
 
     }
 
     @GetMapping(value = "/getExpenditureById/{userId}")
-    public ExpenditureModel getExpenditureModel(@PathVariable("userId") String userId)
+    public List<ExpenditureModel> getExpenditureModel(@PathVariable("userId") String userId)
     {
        return expenditureService.getExpenditureModelId(userId);
 
